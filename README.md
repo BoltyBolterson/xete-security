@@ -1,3 +1,10 @@
+# 🚧 Under construction
+
+This repo is actively being populated with audited, public-facing security content.
+Check back soon.
+
+---
+
 # xete security & safety
 
 Public, audited record of how xete protects users and their funds: security practices,
