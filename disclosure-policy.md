@@ -131,8 +131,7 @@ re-derive the reasoning:
 - **Expires** is set one year out from today (2026-07-28). RFC 9116
   requires this field, and requires the file be refreshed before it
   passes — whoever owns this file needs to either automate the refresh
-  or put a reminder somewhere durable (e.g. the machine state file or
-  `.hermes`) so it doesn't silently go stale.
+  or put a reminder somewhere durable so it doesn't silently go stale.
 - **Policy** points at this document's canonical GitHub URL so the
   full policy (safe harbor, scope, response window) is one hop away
   from the machine-readable file.

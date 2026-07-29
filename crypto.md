@@ -12,10 +12,10 @@ in the main repo.
 
 | Use | Algorithm | Library |
 |---|---|---|
-| Wallet signatures | Ed25519 | `ed25519-dalek` 2.x |
-| Key exchange | X25519 | `x25519-dalek` 2.x |
-| Symmetric encryption | AES-256-GCM | `aes-gcm` 0.10.x |
-| HMAC | HMAC-SHA256 | `hmac` 0.12.x |
+| Wallet signatures (server-side verify) | Ed25519 | `ed25519-dalek` 2.x (Rust, server) |
+| Key exchange (client-side E2E) | X25519 | TweetNaCl `nacl.box.keyPair` (JS, browser) |
+| Symmetric encryption (client-side E2E) | XSalsa20-Poly1305 (NaCl `box`) | TweetNaCl `nacl.box`/`nacl.box.open` (JS, browser) |
+| HMAC | HMAC-SHA256 | `hmac` 0.12.x (Rust, server — JWT only, not message encryption) |
 | Password hashing | (n/a — no passwords) | — |
 | JWT | HS256, custom impl per RFC 7515 | `crypto.rs` (in-tree) |
 | On-chain | Native Solana BPF | `solana-program` 1.18.x |
@@ -23,13 +23,28 @@ in the main repo.
 All primitives are well-established, broadly audited, and chosen for their
 ubiquity rather than novelty. xete does not invent cryptographic algorithms.
 
-Note on the earlier public claim: xete-protocol's docs previously described
-the symmetric cipher inconsistently in one place (SECURITY.md's prose
-mentioned "ChaCha20-Poly1305 (or AES-256-GCM)"). Every other reference across
-the codebase — the web UI, the docs, and the server's own SEO metadata — has
-always said AES-256-GCM only. That inconsistency has been corrected; the
-table above (AES-256-GCM, no ChaCha20-Poly1305) is the single source of
-truth.
+**Correction (2026-07-28):** this table previously said the client's
+symmetric cipher was AES-256-GCM via a Rust `aes-gcm` crate, and framed that
+as the corrected, verified answer to an earlier ChaCha20/AES-256-GCM
+inconsistency in xete-protocol's SECURITY.md. Neither `x25519-dalek` nor
+`aes-gcm` appears anywhere in xete-protocol's dependency tree — that
+attribution was wrong, copied from the same doc it was meant to be
+independently checking, not verified against the actual client code as
+claimed. The real implementation, read directly from
+`src/web/inbox.html`, is TweetNaCl's `nacl.box` — X25519 + XSalsa20-Poly1305,
+a JS library running in the browser, not a Rust crate. The table above is
+now corrected to match. See the note below on `xete-mcp` for a second,
+still-open cipher discrepancy this correction surfaced.
+
+**Also open, not yet resolved:** the separate `xete-mcp` reference client
+(`github.com/xetenet/xete-mcp`) encrypts with real AES-256-GCM (Python
+`cryptography` library, 12-byte nonce) — a genuinely different, incompatible
+construction from the web client's XSalsa20-Poly1305 (24-byte nonce) shown
+above. Both register their public key through the same server endpoint, so
+nothing currently prevents a web user and an MCP agent from trying to
+message each other; whether that has ever worked end-to-end is unconfirmed.
+This needs an engineering decision (standardize on one construction, migrate
+the other), not a docs fix — tracked, not yet done.
 
 ## E2E messaging key lifecycle: what it actually is
 
