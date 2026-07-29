@@ -30,6 +30,9 @@ For internal architecture and reasoning docs, see the private companion repo
 - [`incident-history.md`](./incident-history.md) — public record of past incidents
   (none to date), with a standing commitment to log future ones here and never edit
   away a past entry.
+- [`known-limitations.md`](./known-limitations.md) — open, tracked gaps that aren't
+  incidents (nothing has been exploited) but aren't fixed yet either — currently: the
+  `xete-mcp` reference client has no client-side cap on server-quoted payment amounts.
 
 Status: content is live and reviewed for public release; each entry is kept in sync
 with claims made in the main [`xete-protocol`](https://github.com/BoltyBolterson/xete-protocol)

@@ -46,6 +46,19 @@ message each other; whether that has ever worked end-to-end is unconfirmed.
 This needs an engineering decision (standardize on one construction, migrate
 the other), not a docs fix — tracked, not yet done.
 
+**Correction (2026-07-28):** `xete-mcp`'s X25519 encryption keypair is also
+static, not ephemeral, and any copy elsewhere describing it as generating "a
+fresh ephemeral key per message" is wrong and should be corrected. Verified
+directly against `src/xete_mcp/crypto.py`: the X25519 keypair is a separate,
+static keypair generated once per identity and registered to the server —
+the module's own docstring says as much ("Message encryption uses a
+SEPARATE x25519 keypair, registered to the server"). Only the 12-byte
+AES-GCM *nonce* is fresh per message; the underlying key-exchange keypair
+itself never rotates. This is the same static-key, no-forward-secrecy
+picture as the web client above, just in a different codebase: a compromise
+of one identity's long-term X25519 secret would decrypt every past message
+ever sent to that identity, not just future ones.
+
 ## E2E messaging key lifecycle: what it actually is
 
 The X25519 keypair used for end-to-end message encryption is **not**
