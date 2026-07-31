@@ -13,14 +13,18 @@ described in one is a gift to attackers, not to us.
 
 Instead, email your report directly to a human:
 
-- **Currently working, confirmed live: `john@xete.net`.** This is the real
-  contact today. Use it.
-- **Aspirational: `security@xete.net`.** We intend to stand up a dedicated
-  security alias and route it to the same people who triage
-  `john@xete.net`. As of this writing **`security@xete.net` is not yet set
-  up** — do not rely on it. This document will be updated the moment it is
-  live, and until then this paragraph stays as the honest status rather
-  than being quietly deleted.
+- **`security@xete.net`** — the dedicated security address. Stood up and
+  confirmed working **2026-07-31** (verified by SMTP `RCPT TO` against the
+  live MX, which returns `250`; it previously returned `550 Address not
+  found`). Use this one.
+- **`john@xete.net`** also still works and reaches the same person. It was
+  the sole contact until 2026-07-31 and is kept as a fallback rather than
+  retired, so older copies of this document and anything already published
+  pointing at it do not dead-end.
+
+Earlier revisions of this section described `security@xete.net` as
+aspirational and not yet set up. That is no longer true — it is live, and
+`/.well-known/security.txt` now points at it.
 
 For severe issues affecting user funds or message privacy, and if you'd
 prefer not to send full details over plain email, say so in your first
@@ -103,38 +107,45 @@ If you're not sure whether something is in scope, report it anyway and
 say you're unsure — we'd rather triage a borderline report than miss a
 real one because someone assumed it was out of bounds.
 
-## `/.well-known/security.txt` (RFC 9116) — planned, not yet served
+## `/.well-known/security.txt` (RFC 9116) — live
 
-The content below is the intended text for
-`https://xete.net/.well-known/security.txt`, formatted per
-[RFC 9116](https://www.rfc-editor.org/rfc/rfc9116). **This is not live
-yet.** Serving a file at that path requires a small server-side route
-change in `xete-protocol` (a new static-file or handler entry), which has
-not been made. Until it's wired up, this fenced block is the source of
-truth for what that file *should* say — copy it in once the route exists,
-rather than re-deriving it.
+Served at `https://xete.net/.well-known/security.txt`, formatted per
+[RFC 9116](https://www.rfc-editor.org/rfc/rfc9116). Caddy serves it with a
+`file_server` handler from the site docroot. The block below is the exact
+served content — if the two ever disagree, the live file is what matters
+and this block is the thing that is wrong.
 
 ```
-Contact: mailto:john@xete.net
-Expires: 2027-07-28T00:00:00.000Z
+Contact: mailto:security@xete.net
+Expires: 2027-06-14T00:00:00.000Z
 Policy: https://github.com/BoltyBolterson/xete-security/blob/main/disclosure-policy.md
 Preferred-Languages: en
+Canonical: https://xete.net/.well-known/security.txt
 ```
 
-Notes on the fields above, so whoever wires this up doesn't have to
-re-derive the reasoning:
+Notes on the fields, so nobody has to re-derive the reasoning:
 
-- **Contact** points at `john@xete.net`, not `security@xete.net`, because
-  RFC 9116 contact fields should resolve to something that actually
-  works today. Update this the day `security@xete.net` is live and
-  confirmed — don't update it preemptively.
-- **Expires** is set one year out from today (2026-07-28). RFC 9116
-  requires this field, and requires the file be refreshed before it
-  passes — whoever owns this file needs to either automate the refresh
-  or put a reminder somewhere durable so it doesn't silently go stale.
-- **Policy** points at this document's canonical GitHub URL so the
-  full policy (safe harbor, scope, response window) is one hop away
-  from the machine-readable file.
+- **Contact** points at `security@xete.net` as of **2026-07-31**. It
+  previously pointed at `john@xete.net` on the principle that an RFC 9116
+  contact must resolve to something that actually works — `security@` did
+  not exist until 2026-07-31. It does now, and was verified live before
+  this change, not assumed.
+- **Expires** is 2027-06-14. RFC 9116 requires the field and requires the
+  file be refreshed before it passes. **There is currently no automation
+  and no reminder for this** — it will go stale silently unless someone
+  owns it. That is a known gap, stated rather than hidden.
+- **Policy** points at this document's canonical GitHub URL so the full
+  policy (safe harbor, scope, response window) is one hop away from the
+  machine-readable file.
+- **Canonical** is present in the served file and was not in earlier
+  drafts of this block; it declares the file's authoritative location so a
+  copy served from elsewhere can be recognised as not ours.
+
+**Not integrity-monitored.** `security.txt` is not listed in `routes.txt`
+or `manifest.json`, so the 15-minute drift monitor that covers the public
+pages does **not** watch this file. Changing it does not require a
+manifest update — and equally, tampering with it would not raise the
+alarm. Worth adding to the monitored set.
 
 ## Updates
 
@@ -143,4 +154,4 @@ this repo and in `xete-protocol`. If the response-time commitment,
 contact address, or safe-harbor terms change, this file and
 `xete-protocol/SECURITY.md` will be updated together.
 
-Last reviewed: 2026-07-28.
+Last reviewed: 2026-07-31.
