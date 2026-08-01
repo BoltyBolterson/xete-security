@@ -26,8 +26,8 @@ engineered into pointing `XETE_SERVER_URL` somewhere untrusted could quote an
 arbitrarily large `message_count` and the client would sign and pay it without
 complaint — provided `XETE_SOL_KEYPAIR` is a funded wallet.
 
-**Why this isn't urgent today:** the live server is currently free alpha — sending
-costs nothing right now, so there's nothing for a malicious quote to actually charge.
+**Why this isn't urgent today:** the live server offers free messaging — sending
+costs nothing, so there's nothing for a malicious quote to actually charge.
 This is a real design gap, not a real loss, as of this writing.
 
 **What we're doing about it:** a client-side spend-cap design has been drafted
