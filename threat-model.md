@@ -1,8 +1,7 @@
 # Threat Model
 
 This document defines what xete is, and is not, defending against. It is
-the companion to [`SECURITY.md` in the xete-protocol
-repo](https://github.com/BoltyBolterson/xete-protocol/blob/main/SECURITY.md),
+the companion to the protocol repository's `SECURITY.md`,
 restated here as a dedicated, standalone threat model: scope, adversary
 classes, and — for each one — exactly what defends against it, and what
 doesn't. Where a claim below also appears in `SECURITY.md`, the two are
@@ -236,7 +235,7 @@ please report it the same way you'd report a security bug (see
 
 ## Related Documents
 
-- [`SECURITY.md`](https://github.com/BoltyBolterson/xete-protocol/blob/main/SECURITY.md)
+- `SECURITY.md`
   in xete-protocol — the full security policy, cryptographic primitives
   table, and per-threat summary table this document expands on.
 - [`incident-history.md`](./incident-history.md) — public record of past

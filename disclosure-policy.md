@@ -47,7 +47,7 @@ well-formatted report.
 
 We aim to respond within **48 hours** of receiving your report. This
 mirrors the response-time commitment already published in
-[`xete-protocol/SECURITY.md`](https://github.com/BoltyBolterson/xete-protocol/blob/main/SECURITY.md)
+the protocol repository's `SECURITY.md` (not publicly available)
 — we're not inventing a new number here, just restating the same one in
 the place researchers are more likely to look for a disclosure policy
 specifically.
@@ -89,7 +89,7 @@ every possible law in every jurisdiction — use ordinary judgment.
 ## Scope
 
 **In scope:**
-- `xete-protocol` (server, web client, auth, messaging, payment flow)
+- The xete server, web client, auth, messaging and payment flow
 - The on-chain program at `GLdM82RspCLDFmAUqty2Ef8GBGursZVgMD9cqeNHDq2U`
 - `xete.net` and infrastructure serving it
 

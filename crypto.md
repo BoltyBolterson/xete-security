@@ -4,8 +4,8 @@ This page documents the actual cryptographic primitives xete uses today, and
 gives an honest accounting of the E2E messaging key lifecycle — including
 what protection it does *not* provide. Everything here was verified against
 the current xete-protocol source in this session; it is kept in sync with
-[`SECURITY.md`](https://github.com/BoltyBolterson/xete-protocol/blob/main/SECURITY.md)
-and [`security.html`](https://github.com/BoltyBolterson/xete-protocol/blob/main/src/web/security.html)
+`SECURITY.md`
+and `security.html`
 in the main repo.
 
 ## Primitives
@@ -143,7 +143,7 @@ ships.
 
 ## Related
 
-- [`SECURITY.md`](https://github.com/BoltyBolterson/xete-protocol/blob/main/SECURITY.md)
+- `SECURITY.md`
   in xete-protocol — full security guarantees, non-guarantees, and threat
   model, including this same forward-secrecy disclosure and the metadata
   retention disclosure.

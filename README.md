@@ -35,5 +35,5 @@ For internal architecture and reasoning docs, see the private companion repo
   `xete-mcp` reference client has no client-side cap on server-quoted payment amounts.
 
 Status: content is live and reviewed for public release; each entry is kept in sync
-with claims made in the main [`xete-protocol`](https://github.com/BoltyBolterson/xete-protocol)
+with claims made in the main protocol repository
 repo (notably `SECURITY.md`) and updated as the underlying system changes.
